@@ -67,11 +67,11 @@ public class MyString {
     public static String spacedString(String str) {
           String newstr = "";
 
-        for (int i = 0; i < str.length(); i++) {
+        for (int i = 0; i < str.length()-1; i++) {
             newstr += str.charAt(i) + " ";
             
         }
-        return newstr;
+        return newstr + str.charAt(str.length()-1);
     }
   
     /**
