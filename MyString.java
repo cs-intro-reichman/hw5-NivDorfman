@@ -103,10 +103,10 @@ public class MyString {
      * @return a string consisting of str1 minus all the characters of str2
      */
     public static String remove(String str1, String str2) {
-       String result = str2;
+       String result = str1;
 
-        for (int i = 0; i < str1.length(); i++) {
-            char c = str1.charAt(i);
+        for (int i = 0; i < str2.length(); i++) {
+            char c = str2.charAt(i);
             result = result.replaceFirst((String.valueOf(c)), "");
         }
 
