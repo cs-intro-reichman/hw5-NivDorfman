@@ -69,8 +69,13 @@ public class MyString {
      * @return a string consisting of the characters of str, separated by spaces.
      */
     public static String spacedString(String str) {
-        //// Replace the following statement with your code
-        return null;
+          String newstr = "";
+
+        for (int i = 0; i < str.length(); i++) {
+            newstr += str.charAt(i) + " ";
+            
+        }
+        return newstr;
     }
   
     /**
@@ -84,13 +89,11 @@ public class MyString {
      * @return a randomly generated string, consisting of 'n' lowercase letters
      */
     public static String randomStringOfLetters(int n) {
-        String newstr = "";
-
-        for (int i = 0; i < str.length(); i++) {
-            newstr += str.charAt(i) + " ";
-            
+         String str = "";
+        for (int i = 0; i < n; i++) {
+            str += (char) ('a' + (int) (Math.random() * 26));
         }
-        return newstr;
+        return str;
     }
 
     /**
