@@ -47,8 +47,13 @@ public class Scrabble {
 	}
 
 	// Checks if the given word is in the dictionary.
-	public static boolean isWordInDictionary(String word) {
-		//// Replace the following statement with your code
+		public static boolean isWordInDictionary(String word) {
+	
+		for (int i = 0; i < DICTIONARY.length; i++) {
+			
+			if(word.equals(DICTIONARY[i]))
+				return true;
+		}
 		return false;
 	}
 	
@@ -56,10 +61,47 @@ public class Scrabble {
 	// If the length of the word equals the length of the hand, adds 50 points to the score.
 	// If the word includes the sequence "runi", adds 1000 points to the game.
 	public static int wordScore(String word) {
-		//// Replace the following statement with your code
-		return 0;
-	}
+		int score = 0;
 
+		for (int i = 0; i < word.length(); i++) {
+			char c = word.charAt(i);
+			score += SCRABBLE_LETTER_VALUES[c - 'a'];
+		}
+		if(word.length() == HAND_SIZE)
+		{
+			score += 50;
+		}
+	//	if(subsetOf("runi", word));
+	//		score += 1000;
+		return score;
+	}
+	//returns how many times a letter in a word
+	public static int countChar(String str, char ch) {
+
+        int cnt = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            
+            if(str.charAt(i) == ch){
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+	//returns if str1 is in str2
+	public static boolean subsetOf(String str1, String str2) {
+        int cnt = 0;
+        for (int i = 0; i < str1.length(); i++) {
+            
+          for (int j = 0; j < str2.length(); j++) {
+              if(str1.charAt(i) == str2.charAt(j) && countChar(str1, str1.charAt(i)) == 1)
+                cnt++;
+          }
+        }
+            if(cnt == str1.length())
+                return true;    
+        return false;
+    }
 	// Creates a random hand of length (HAND_SIZE - 2) and then inserts
 	// into it, at random indexes, the letters 'a' and 'e'
 	// (these two vowels make it easier for the user to construct words)
