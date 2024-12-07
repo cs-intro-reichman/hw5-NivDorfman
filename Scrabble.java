@@ -91,17 +91,15 @@ public class Scrabble {
     }
 	//returns if str1 is in str2
 	public static boolean subsetOf(String str1, String str2) {
-        int cnt = 0;
+        boolean isSubset = true;
         for (int i = 0; i < str1.length(); i++) {
-            
-          for (int j = 0; j < str2.length(); j++) {
-              if(str1.charAt(i) == str2.charAt(j) && countChar(str1, str1.charAt(i)) == 1)
-                cnt++;
-          }
+            int countStr1 = countChar(str1, str1.charAt(i));
+            int countStr2 = countChar(str2, str1.charAt(i));
+            if (countStr1 > countStr2) {
+                isSubset = false;
+            }
         }
-            if(cnt == str1.length())
-                return true;    
-        return false;
+        return isSubset;
     }
 	// Creates a random hand of length (HAND_SIZE - 2) and then inserts
 	// into it, at random indexes, the letters 'a' and 'e'
