@@ -148,6 +148,10 @@ public class Scrabble {
 			// non-whitespace characters. Whitespace is either space characters, or  
 			// end-of-line characters.
 			String input = in.readString();
+			if(input.equals("."))
+			{
+				break;
+			}
 			//// Replace the following break statement with code
 			//// that completes the hand playing loop
 			score += wordScore(input);
