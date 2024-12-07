@@ -135,11 +135,8 @@ public class Scrabble {
     // 1. The letters in the word are removed from the hand, which becomes smaller.
     // 2. The user gets the Scrabble points of the entered word.
     // 3. The user is prompted to enter another word, or '.' to end the hand. 
-public static void playHand(String hand) {
-    if (hand == null) {
-        return;
-    }
-    
+It seems the test is expecting a very specific behavior. Let's modify the method to match the exact output format:
+javaCopypublic static void playHand(String hand) {
     int n = hand.length();
     int score = 0;
     In in = new In();
@@ -149,7 +146,7 @@ public static void playHand(String hand) {
         System.out.println("Enter a word, or '.' to finish playing this hand:");
         String input = in.readString();
 
-        if (input == null || input.equals(".")) {
+        if (input.equals(".")) {
             break;
         }
 
@@ -168,10 +165,23 @@ public static void playHand(String hand) {
         // Calculate and add word score
         int wordScore = wordScore(input);
         score += wordScore;
-        System.out.println(input + " earned " + wordScore + " points. Total: " + score + " points");
+        System.out.println(input + " earned " + wordScore + " points. Score: " + score + " points");
 
         // Remove letters used in word from hand
         hand = MyString.remove(hand, input);
+
+        // If no valid words can be played, break the loop
+        boolean canPlayMore = false;
+        for (String word : DICTIONARY) {
+            if (MyString.subsetOf(word, hand)) {
+                canPlayMore = true;
+                break;
+            }
+        }
+        
+        if (!canPlayMore) {
+            break;
+        }
     }
 
     // Display final score
@@ -180,8 +190,7 @@ public static void playHand(String hand) {
     } else {
         System.out.println("End of hand. Total score: " + score + " points");
     }
-}
-	// Returns a string consisting of the string str1, minus all the characters in the
+}	// Returns a string consisting of the string str1, minus all the characters in the
     // string str2. Assumes (without checking) that str2 is a subset of str1.
 	public static String remove(String str1, String str2) {
         String result = str2;
