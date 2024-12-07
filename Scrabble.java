@@ -168,6 +168,19 @@ public class Scrabble {
 
         // Remove letters used in word from hand
         hand = MyString.remove(hand, input);
+
+        // If no more valid words can be played, end the hand
+        boolean hasValidWord = false;
+        for (String dictWord : DICTIONARY) {
+            if (MyString.subsetOf(dictWord, hand)) {
+                hasValidWord = true;
+                break;
+            }
+        }
+        
+        if (!hasValidWord) {
+            break;
+        }
     }
 
     // Display final score
