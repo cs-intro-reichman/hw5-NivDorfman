@@ -136,47 +136,47 @@ public class Scrabble {
     // 2. The user gets the Scrabble points of the entered word.
     // 3. The user is prompted to enter another word, or '.' to end the hand. 
 	public static void playHand(String hand) {
-		int n = hand.length();
-		int score = 0;
-		In in = new In();
-		
-		while (hand.length() > 0) {
-			System.out.println("Current Hand: " + MyString.spacedString(hand));
-			System.out.println("Enter a word, or '.' to finish playing this hand:");
-			String input = in.readString();
-	
-			if (input.equals(".")) {
-				break;
-			}
-	
-			// Check if word can be made from current hand
-			if (!MyString.subsetOf(input, hand)) {
-				System.out.println("Invalid word. Cannot be made from available letters.");
-				continue;
-			}
-	
-			// Check if word exists in dictionary
-			if (!isWordInDictionary(input)) {
-				System.out.println("Word not in dictionary.");
-				continue;
-			}
-	
-			// Calculate and add word score
-			int wordScore = wordScore(input);
-			score += wordScore;
-			System.out.println(input + " earned " + wordScore + " points. Total: " + score + " points");
-	
-			// Remove letters used in word from hand
-			hand = MyString.remove(hand, input);
-		}
-	
-		// Display final score
-		if (hand.length() == 0) {
-			System.out.println("Ran out of letters. Total score: " + score + " points");
-		} else {
-			System.out.println("End of hand. Total score: " + score + " points");
-		}
-	}
+    int n = hand.length();
+    int score = 0;
+    In in = new In();
+    
+    while (hand.length() > 0) {
+        System.out.println("Current Hand: " + MyString.spacedString(hand));
+        System.out.println("Enter a word, or '.' to finish playing this hand:");
+        String input = in.readString();
+
+        if (input.equals(".")) {
+            break;
+        }
+
+        // Check if word can be made from current hand
+        if (!MyString.subsetOf(input, hand)) {
+            System.out.println("Invalid word. Try again.");
+            continue;
+        }
+
+        // Check if word exists in dictionary
+        if (!isWordInDictionary(input)) {
+            System.out.println("No such word in the dictionary. Try again.");
+            continue;
+        }
+
+        // Calculate and add word score
+        int wordScore = wordScore(input);
+        score += wordScore;
+        System.out.println(input + " earned " + wordScore + " points. Total: " + score + " points");
+
+        // Remove letters used in word from hand
+        hand = MyString.remove(hand, input);
+    }
+
+    // Display final score
+    if (hand.length() == 0) {
+        System.out.println("Ran out of letters. Total score: " + score + " points");
+    } else {
+        System.out.println("End of hand. Total score: " + score + " points");
+    }
+}
 	// Returns a string consisting of the string str1, minus all the characters in the
     // string str2. Assumes (without checking) that str2 is a subset of str1.
 	public static String remove(String str1, String str2) {
