@@ -67,12 +67,13 @@ public class Scrabble {
 			char c = word.charAt(i);
 			score += SCRABBLE_LETTER_VALUES[c - 'a'];
 		}
+		score *= word.length();
 		if(word.length() == HAND_SIZE)
 		{
 			score += 50;
 		}
-	//	if(subsetOf("runi", word));
-	//		score += 1000;
+		if(subsetOf("runi", word))
+			score += 1000;
 		return score;
 	}
 	//returns how many times a letter in a word
