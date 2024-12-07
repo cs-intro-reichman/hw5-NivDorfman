@@ -135,7 +135,11 @@ public class Scrabble {
     // 1. The letters in the word are removed from the hand, which becomes smaller.
     // 2. The user gets the Scrabble points of the entered word.
     // 3. The user is prompted to enter another word, or '.' to end the hand. 
-	public static void playHand(String hand) {
+public static void playHand(String hand) {
+    if (hand == null) {
+        return;
+    }
+    
     int n = hand.length();
     int score = 0;
     In in = new In();
@@ -145,7 +149,7 @@ public class Scrabble {
         System.out.println("Enter a word, or '.' to finish playing this hand:");
         String input = in.readString();
 
-        if (input.equals(".")) {
+        if (input == null || input.equals(".")) {
             break;
         }
 
@@ -168,19 +172,6 @@ public class Scrabble {
 
         // Remove letters used in word from hand
         hand = MyString.remove(hand, input);
-
-        // If no more valid words can be played, end the hand
-        boolean hasValidWord = false;
-        for (String dictWord : DICTIONARY) {
-            if (MyString.subsetOf(dictWord, hand)) {
-                hasValidWord = true;
-                break;
-            }
-        }
-        
-        if (!hasValidWord) {
-            break;
-        }
     }
 
     // Display final score
