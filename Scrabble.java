@@ -136,17 +136,26 @@ public class Scrabble {
     // 2. The user gets the Scrabble points of the entered word.
     // 3. The user is prompted to enter another word, or '.' to end the hand. 
 public static void playHand(String hand) {
+    if (hand == null) {
+        return;
+    }
+    
     int n = hand.length();
     int score = 0;
     In in = new In();
     
-    while (hand.length() > 0) {
+    while (hand != null && hand.length() > 0) {
         System.out.println("Current Hand: " + MyString.spacedString(hand));
         System.out.println("Enter a word, or '.' to finish playing this hand:");
         String input = in.readString();
 
-        if (input.equals(".")) {
+        if (input == null || input.equals(".")) {
             break;
+        }
+
+        // Null and empty checks for input and hand
+        if (input.isEmpty() || hand.isEmpty()) {
+            continue;
         }
 
         // Check if word can be made from current hand
@@ -168,23 +177,10 @@ public static void playHand(String hand) {
 
         // Remove letters used in word from hand
         hand = MyString.remove(hand, input);
-
-        // If no valid words can be played, break the loop
-        boolean canPlayMore = false;
-        for (String word : DICTIONARY) {
-            if (MyString.subsetOf(word, hand)) {
-                canPlayMore = true;
-                break;
-            }
-        }
-        
-        if (!canPlayMore) {
-            break;
-        }
     }
 
     // Display final score
-    if (hand.length() == 0) {
+    if (hand == null || hand.length() == 0) {
         System.out.println("Ran out of letters. Total score: " + score + " points");
     } else {
         System.out.println("End of hand. Total score: " + score + " points");
