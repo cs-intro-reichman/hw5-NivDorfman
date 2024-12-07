@@ -105,9 +105,31 @@ public class Scrabble {
 	// into it, at random indexes, the letters 'a' and 'e'
 	// (these two vowels make it easier for the user to construct words)
 	public static String createHand() {
-		//// Replace the following statement with your code
-		return null;
+		
+		String str = "";
+		str = randomStringOfLetters(HAND_SIZE - 2);
+		str = insertRandomly('a', str);
+		str = insertRandomly('e', str);
+		return str;
+		
 	}
+	// returns a random string
+	public static String randomStringOfLetters(int n) {
+        
+        String str = "";
+        for (int i = 0; i < n; i++) {
+            str += (char) ('a' + (int) (Math.random() * 26));
+        }
+        return str;
+    }
+	// adds the letter in random location 
+	public static String insertRandomly(char ch, String str) {
+		// Generate a random index between 0 and str.length()
+		int randomIndex = (int) (Math.random() * (str.length() + 1));
+		// Insert the character at the random index
+		String result = str.substring(0, randomIndex) + ch + str.substring(randomIndex);
+		return result;
+   }    
 	
     // Runs a single hand in a Scrabble game. Each time the user enters a valid word:
     // 1. The letters in the word are removed from the hand, which becomes smaller.
