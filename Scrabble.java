@@ -135,53 +135,32 @@ public class Scrabble {
     // 1. The letters in the word are removed from the hand, which becomes smaller.
     // 2. The user gets the Scrabble points of the entered word.
     // 3. The user is prompted to enter another word, or '.' to end the hand. 
-public static void playHand(String hand) {
-    int n = hand.length();
-    int score = 0;
-    In in = new In();
-    
-    while (hand.length() > 0) {
-        System.out.println("Current Hand: " + MyString.spacedString(hand));
-        System.out.println("Enter a word, or '.' to finish playing this hand:");
-        String input = in.readString();
+	public static void playHand(String hand) {
+		int n = hand.length();
+		int score = 0;  
+		In in = new In();
+		while (hand.length() > 0) {
+			System.out.println("Current Hand: " + MyString.spacedString(hand));
+			System.out.println("Enter a word, or '.' to finish playing this hand:");
+			String input = in.readString();
 
-        if (input.equals(".")) {
-            break;
-        }
-
-        // Check if word can be made from current hand
-        if (!MyString.subsetOf(input, hand)) {
-            System.out.println("Invalid word. Try again.");
-            continue;
-        }
-
-        // Check if word exists in dictionary
-        if (!isWordInDictionary(input)) {
-            System.out.println("No such word in the dictionary. Try again.");
-            continue;
-        }
-
-        // Calculate and add word score
-        int wordScore = wordScore(input);
-        score += wordScore;
-        System.out.println(input + " earned " + wordScore + " points. Score: " + score + " points");
-
-        // Remove letters used in word from hand
-        hand = MyString.remove(hand, input);
-
-        // If no valid words can be played, break the loop
-        boolean canPlayMore = false;
-        for (String word : DICTIONARY) {
-            if (MyString.subsetOf(word, hand)) {
-                canPlayMore = true;
-                break;
-            }
-        }
-        
-        if (!canPlayMore) {
-            break;
-        }
-    }
+			if(input.equals("."))
+			{
+				break;
+			}
+			score += wordScore(input);
+			hand = remove(input, hand);
+			if(hand.length() == 0)
+			{
+				break;
+			}
+		}
+		if (hand.length() == 0) {
+	        System.out.println("Ran out of letters. Total score: " + score + " points");
+		} else {
+			System.out.println("End of hand. Total score: " + score + " points");
+		}
+	}
 
     // Display final score
     if (hand.length() == 0) {
