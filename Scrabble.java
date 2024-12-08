@@ -160,7 +160,7 @@ public class Scrabble {
 		} else {
 			System.out.println("End of hand. Total score: " + score + " points");
 		}
-	}
+	
 
     // Display final score
     if (hand.length() == 0) {
