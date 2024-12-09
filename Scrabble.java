@@ -47,8 +47,13 @@ public class Scrabble {
 	}
 
 	// Checks if the given word is in the dictionary.
-	public static boolean isWordInDictionary(String word) {
-		//// Replace the following statement with your code
+		public static boolean isWordInDictionary(String word) {
+	
+		for (int i = 0; i < DICTIONARY.length; i++) {
+			
+			if(word.equals(DICTIONARY[i]))
+				return true;
+		}
 		return false;
 	}
 	
@@ -56,41 +61,118 @@ public class Scrabble {
 	// If the length of the word equals the length of the hand, adds 50 points to the score.
 	// If the word includes the sequence "runi", adds 1000 points to the game.
 	public static int wordScore(String word) {
-		//// Replace the following statement with your code
-		return 0;
-	}
+		int score = 0;
 
+		for (int i = 0; i < word.length(); i++) {
+			char c = word.charAt(i);
+			score += SCRABBLE_LETTER_VALUES[c - 'a'];
+		}
+		score *= word.length();
+		if(word.length() == HAND_SIZE)
+		{
+			score += 50;
+		}
+		if(subsetOf("runi", word))
+			score += 1000;
+		return score;
+	}
+	//returns how many times a letter in a word
+	public static int countChar(String str, char ch) {
+
+        int cnt = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            
+            if(str.charAt(i) == ch){
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+	//returns if str1 is in str2
+	public static boolean subsetOf(String str1, String str2) {
+        boolean isSubset = true;
+        for (int i = 0; i < str1.length(); i++) {
+            int countStr1 = countChar(str1, str1.charAt(i));
+            int countStr2 = countChar(str2, str1.charAt(i));
+            if (countStr1 > countStr2) {
+                isSubset = false;
+            }
+        }
+        return isSubset;
+    }
 	// Creates a random hand of length (HAND_SIZE - 2) and then inserts
 	// into it, at random indexes, the letters 'a' and 'e'
 	// (these two vowels make it easier for the user to construct words)
 	public static String createHand() {
-		//// Replace the following statement with your code
-		return null;
+		
+		String str = "";
+		str = randomStringOfLetters(HAND_SIZE - 2);
+		str = insertRandomly('a', str);
+		str = insertRandomly('e', str);
+		return str;
+		
 	}
+	// returns a random string
+	public static String randomStringOfLetters(int n) {
+        
+        String str = "";
+        for (int i = 0; i < n; i++) {
+            str += (char) ('a' + (int) (Math.random() * 26));
+        }
+        return str;
+    }
+	// adds the letter in random location 
+	public static String insertRandomly(char ch, String str) {
+		// Generate a random index between 0 and str.length()
+		int randomIndex = (int) (Math.random() * (str.length() + 1));
+		// Insert the character at the random index
+		String result = str.substring(0, randomIndex) + ch + str.substring(randomIndex);
+		return result;
+   }    
 	
     // Runs a single hand in a Scrabble game. Each time the user enters a valid word:
     // 1. The letters in the word are removed from the hand, which becomes smaller.
     // 2. The user gets the Scrabble points of the entered word.
     // 3. The user is prompted to enter another word, or '.' to end the hand. 
-	public static void playHand(String hand) {
+public static void playHand(String hand) {
 		int n = hand.length();
 		int score = 0;
-		// Declares the variable in to refer to an object of type In, and initializes it to represent
-		// the stream of characters coming from the keyboard. Used for reading the user's inputs.   
+		// Declares the variable in to refer to an object of type In, and initializes it
+		// to represent
+		// the stream of characters coming from the keyboard. Used for reading the
+		// user's inputs.
 		In in = new In();
 		while (hand.length() > 0) {
 			System.out.println("Current Hand: " + MyString.spacedString(hand));
 			System.out.println("Enter a word, or '.' to finish playing this hand:");
-			// Reads the next "token" from the keyboard. A token is defined as a string of 
-			// non-whitespace characters. Whitespace is either space characters, or  
+			// Reads the next "token" from the keyboard. A token is defined as a string of
+			// non-whitespace characters. Whitespace is either space characters, or
 			// end-of-line characters.
 			String input = in.readString();
 			//// Replace the following break statement with code
 			//// that completes the hand playing loop
-			break;
+			if (input.equals(".")) {
+				break;
+			}
+			if (!MyString.subsetOf(input, hand)) {
+				System.out.println("Invalid word. Try again.");
+			} else {
+				if (!isWordInDictionary(input)) {
+					System.out.println("Invalid word. Try again.");
+				} else {
+					score += wordScore(input);
+					System.out.printf("%s earned %d points. Score: %d points\n\n",
+							input, wordScore(input), score);
+					hand = MyString.remove(hand, input);
+					if (hand.isEmpty()) {
+						break;
+					}
+				}
+			}
 		}
 		if (hand.length() == 0) {
-	        System.out.println("Ran out of letters. Total score: " + score + " points");
+			System.out.println("Ran out of letters. Total score: " + score + " points");
 		} else {
 			System.out.println("End of hand. Total score: " + score + " points");
 		}
@@ -110,9 +192,13 @@ public class Scrabble {
 			// Gets the user's input, which is all the characters entered by 
 			// the user until the user enter the ENTER character.
 			String input = in.readString();
-			//// Replace the following break statement with code
-			//// that completes the game playing loop
-			break;
+			if (input.equals("e")) {
+				break;
+			}
+			if (input.equals("n")) {
+				String hand = createHand();
+				playHand(hand);
+			}
 		}
 	}
 
