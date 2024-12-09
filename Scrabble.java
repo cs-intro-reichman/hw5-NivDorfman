@@ -176,18 +176,7 @@ public static void playHand(String hand) {
 		} else {
 			System.out.println("End of hand. Total score: " + score + " points");
 		}
-	}// Returns a string consisting of the string str1, minus all the characters in the
-    // string str2. Assumes (without checking) that str2 is a subset of str1.
-	public static String remove(String str1, String str2) {
-        String result = str2;
-
-        for (int i = 0; i < str1.length(); i++) {
-            char c = str1.charAt(i);
-            result = result.replaceFirst((String.valueOf(c)), "");
-        }
-
-        return result;
-    }
+	}
 
 	// Plays a Scrabble game. Prompts the user to enter 'n' for playing a new hand, or 'e'
 	// to end the game. If the user enters any other input, writes an error message.
@@ -203,9 +192,13 @@ public static void playHand(String hand) {
 			// Gets the user's input, which is all the characters entered by 
 			// the user until the user enter the ENTER character.
 			String input = in.readString();
-			//// Replace the following break statement with code
-			//// that completes the game playing loop
-			break;
+			if (input.equals("e")) {
+				break;
+			}
+			if (input.equals("n")) {
+				String hand = createHand();
+				playHand(hand);
+			}
 		}
 	}
 
