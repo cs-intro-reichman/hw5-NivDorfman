@@ -155,19 +155,27 @@ public class Scrabble {
 				break;
 			}
 		}
+		if (!MyString.subsetOf(input, hand)) {
+				System.out.println("Invalid word. Try again.");
+			} else {
+				if (!isWordInDictionary(input)) {
+					System.out.println("Invalid word. Try again.");
+				} else {
+					score += wordScore(input);
+					System.out.printf("%s earned %d points. Score: %d points\n\n",
+							input, wordScore(input), score);
+					hand = MyString.remove(hand, input);
+					if (hand.isEmpty()) {
+						break;
+					}
+				}
+			}
+		}
 		if (hand.length() == 0) {
-	        System.out.println("Ran out of letters. Total score: " + score + " points");
+			System.out.println("Ran out of letters. Total score: " + score + " points");
 		} else {
 			System.out.println("End of hand. Total score: " + score + " points");
 		}
-	
-
-    // Display final score
-    if (hand.length() == 0) {
-        System.out.println("Ran out of letters. Total score: " + score + " points");
-    } else {
-        System.out.println("End of hand. Total score: " + score + " points");
-    }
 }	// Returns a string consisting of the string str1, minus all the characters in the
     // string str2. Assumes (without checking) that str2 is a subset of str1.
 	public static String remove(String str1, String str2) {
